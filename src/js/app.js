@@ -1,15 +1,20 @@
-export default class ErrorRepository {
+export default class Team {
   constructor() {
-    this.errors = new Map([
-      [100, 'Ошибка 100'],
-      [110, 'Ошибка 110'],
-      [120, 'Ошибка 120'],
-      [130, 'Ошибка 130'],
-      [200, 'Что-то пошло не так)'],
-    ]);
+    this.team = new Set();
   }
 
-  translate(code) {
-    return this.errors.has(code) ? this.errors.get(code) : 'Unknown error';
+  add(hero) {
+    if (this.team.has(hero)) {
+      throw new Error(`${hero.type} ${hero.name} уже есть в команде`);
+    }
+    this.team.add(hero);
+  }
+
+  addAll(...heroes) {
+    heroes.forEach((hero) => this.team.add(hero));
+  }
+
+  toArray() {
+    return [...this.team];
   }
 }
